@@ -1,0 +1,63 @@
+"*":
+  "autocomplete-plus": {}
+  blame: {}
+  core:
+    allowPendingPaneItems: false
+    audioBeep: false
+    disabledPackages: [
+      "git-blame"
+      "whitespace"
+      "show-invisibles-plus"
+    ]
+    projectHome: "/Users/Chris/Projects"
+    themes: [
+      "one-dark-ui"
+      "base16-tomorrow-dark-theme"
+    ]
+  docblockr: {}
+  editor:
+    autoIndentOnPaste: false
+    fontFamily: "Source Code Pro"
+    invisibles: {}
+    lineHeight: 1.7
+    preferredLineLength: 120
+    scrollPastEnd: true
+    scrollSensitivity: 50
+    showIndentGuide: true
+    showInvisibles: true
+    softTabs: false
+    tabLength: 4
+  "exception-reporting":
+    userId: "6150d747-0547-e9bc-d83b-4ba7673fabe2"
+  "fold-functions": {}
+  "git-blame-plus":
+    ignoreWhiteSpaceDiffs: true
+  "highlight-line": {}
+  "highlight-selected": {}
+  "merge-conflicts": {}
+  minimap: {}
+  "one-dark-ui": {}
+  "php-class-tree":
+    displayOnRight: true
+  "show-invisibles-plus": {}
+  "tree-view": {}
+  welcome:
+    showOnStartup: false
+  whitespace:
+    removeTrailingWhitespace: false
+".blade.html.php.text":
+  editor:
+    commentEnd: " --}}"
+    commentStart: "{{-- "
+".html.php.text":
+  editor:
+    preferredLineLength: 120
+".js.jsx.react.source":
+  editor:
+    preferredLineLength: 120
+".js.jsx.source":
+  editor:
+    preferredLineLength: 120
+".js.source.subtlegradient":
+  editor:
+    preferredLineLength: 120
