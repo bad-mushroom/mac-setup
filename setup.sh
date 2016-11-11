@@ -78,28 +78,27 @@ brew linkapps
 brew install homebrew/completions/brew-cask-completion
 
 apps=(
-  1password			# Password Manager
-  atom				# Code Editor
-  audacity			# Audio Recorder
-  bash 				# Bash Shell
-  caffeine			# Prevent Sleep Mode
-  dropbox			# File Sync
-  git				# Git Client
-  gnupg				# GPG Encryption
-  google-chrome		# Chrome Browser
-  google-drive		# Google Drive Client
-  iterm2			# Terminal
-  lastfm			# Audioscrobbler Client
-  licecap			# Screen Capture
-  polymail			# Email Client
-  php70				# php 7.0
-  slack				# Slack Chat/Communication
-  transmission		# Torrent Client
-  rescuetime		# Productivity Tracking
-  vagrant			# Virtual Machine Management
-  vim				# CLI Editor
-  virtualbox		# Virtual Machines
-  wget				# CLI HTTP File Retrieval  
+	1password			# Password Manager
+	atom				# Code Editor
+	audacity			# Audio Recorder
+	bash 				# Bash Shell
+	caffeine			# Prevent Sleep Mode
+	git					# Git Client
+	gnupg				# GPG Encryption
+	google-chrome		# Chrome Browser
+	google-drive		# Google Drive Client
+	iterm2				# Terminal
+	lastfm				# Audioscrobbler Client
+	licecap				# Screen Capture
+	polymail			# Email Client
+	php70				# php 7.0
+	slack				# Slack Chat/Communication
+	transmission		# Torrent Client
+	rescuetime			# Productivity Tracking
+	vagrant				# Virtual Machine Management
+	vim					# CLI Editor
+	virtualbox			# Virtual Machines
+	wget				# CLI HTTP File Retrieval
 )
 
 brew cask install ${apps[@]}
