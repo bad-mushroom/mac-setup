@@ -2,5 +2,5 @@
 
 Host           rr
 HostName       roguerobots.org
-IdentityFile   ~/.ssh/keys/roguerobots.org
+IdentityFile   ~/.ssh/keys/private/roguerobots.org
 User           chris

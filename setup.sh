@@ -2,16 +2,22 @@
 
 # --- Constants
 
-readonly HOMEDIR="/Users/Chris"
+readonly HOMEDIR="/Users/chris"
 readonly HOSTNAME="robot-node-04"
 
 
 # --- Unix Environment
 
-sudo -s
-
+# Dot Files
 git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
 $HOMEDIR/.dotfiles/setup.sh
+
+# Directories
+mkdir $HOMEDIR/.ssh/keys/public		## SSH Public Key Store
+mkdir $HOMEDIR/.ssh/keys/private	## SSH Private Key Store
+mkdir $HOMEDIR/Projects				## Code Projects
+mkdir $HOMEDIR/VMs					## Virtual Machines
+mkdir $HOMEDIR/tmp					## Misc Crap
 
 # Hostname
 scutil –-set HostName $HOSTNAME
@@ -20,6 +26,8 @@ scutil –-set ComputerName $HOSTNAME
 
 
 # --- MacOS Updates
+
+sudo -s
 
 softwareupdate --install --all
 
@@ -89,8 +97,6 @@ apps=(
 	google-drive		# Google Drive Client
 	iterm2				# Terminal
 	lastfm				# Audioscrobbler Client
-	licecap				# Screen Capture
-	polymail			# Email Client
 	php70				# php 7.0
 	slack				# Slack Chat/Communication
 	transmission		# Torrent Client
@@ -106,13 +112,6 @@ brew cleanup
 
 
 # -- App Config
-
-# Directories Preferences
-mkdir $HOMEDIR/.ssh/keys/public		## SSH Public Key Store
-mkdir $HOMEDIR/.ssh/keys/private	## SSH Private Key Store
-mkdir $HOMEDIR/Projects				## Code Projects
-mkdir $HOMEDIR/VMs					## Virtual Machines
-mkdir $HOMEDIR/tmp					## Misc Crap
 
 # Atom
 cp ./apps/atom/config/ $HOMEDIR/.atom/
