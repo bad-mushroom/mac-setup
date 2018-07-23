@@ -18,7 +18,8 @@ mkdir $HOMEDIR/.ssh/keys/private    ## SSH Private Key Store
 mkdir $HOMEDIR/Projects             ## Code Projects
 mkdir $HOMEDIR/tmp                  ## Misc Crap
 
-sudo -s
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Hostname
 scutil –-set HostName $HOSTNAME
