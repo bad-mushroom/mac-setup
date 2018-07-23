@@ -16,6 +16,9 @@ purple="\[\033[0;35m\]"       # Purple
 cyan="\[\033[0;36m\]"         # Cyan
 white="\[\033[0;37m\]"        # White
 
+# Resets the style
+reset=`tput sgr0`
+
 # Color-echo. Improved. [credit to @joaocunha]
 # arg $1 = message
 # arg $2 = Color
@@ -68,7 +71,9 @@ echo ""
 git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
 $HOMEDIR/.dotfiles/setup.sh
 
+echo ""
 cecho "Done." $green
+echo ""
 
 # Directories
 
@@ -82,7 +87,9 @@ mkdir -p $HOMEDIR/.ssh/keys/private    ## SSH Private Key Store
 mkdir -p $HOMEDIR/Projects             ## Code Projects
 mkdir -p $HOMEDIR/tmp                  ## Misc Crap
 
+echo ""
 cecho "Done." $green
+echo ""
 
 # sudo
 
@@ -106,7 +113,9 @@ sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $HOSTNAME
 
+echo ""
 cecho "Done." $green
+echo ""
 
 # --- MacOS Updates
 
@@ -117,7 +126,9 @@ echo ""
 
 softwareupdate --install --all
 
+echo ""
 cecho "Done." $green
+echo ""
 
 # --- GCC/Xcode Tools
 
@@ -131,7 +142,9 @@ if [[ ! -e `which gcc` || ! -e `which gcc-4.2` ]]; then
 	xcode-select --install
 fi
 
+echo ""
 cecho "Done." $green
+echo ""
 
 cecho "###############################################" $blue
 echo ""
@@ -141,7 +154,9 @@ echo ""
 # Enable Filevault
 fdesetup enable
 
+echo ""
 cecho "Done." $green
+echo ""
 
 # --- MacOS Preferences
 
@@ -201,7 +216,9 @@ defaults write com.apple.screencapture type jpg
 for app in Finder Dock; do killall "$app"; done
 killall SystemUIServer
 
+echo ""
 cecho "Done." $green
+echo ""
 
 # --- Homebrew Package Manger
 
@@ -212,7 +229,9 @@ echo ""
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+echo ""
 cecho "Done." $green
+echo ""
 
 cecho "###############################################" $blue
 echo ""
