@@ -22,10 +22,18 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Hostname
-scutil –-set HostName $HOSTNAME
-scutil –-set LocalHostName $HOSTNAME
-scutil –-set ComputerName $HOSTNAME
 
+echo ""
+echo "Would you like to set your computer's hostname?  (y/n)"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  echo "What would you like it to be?"
+  read HOSTNAME
+  sudo scutil --set ComputerName $HOSTNAME
+  sudo scutil --set HostName $HOSTNAME
+  sudo scutil --set LocalHostName $HOSTNAME
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $HOSTNAME
+fi
 
 # --- MacOS Updates
 
