@@ -5,18 +5,35 @@
 readonly HOMEDIR="/Users/chris"
 readonly HOSTNAME="robot-node-04"
 
-
 # --- Unix Environment
 
 # Dot Files
+
+echo ""
+echo "Cloning .dotfiles repo..."
+echo ""
 git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
 $HOMEDIR/.dotfiles/setup.sh
+echo "done."
 
 # Directories
+
+echo ""
+echo "Adding custom directories..."
+echo ""
+
 mkdir $HOMEDIR/.ssh/keys/public     ## SSH Public Key Store
 mkdir $HOMEDIR/.ssh/keys/private    ## SSH Private Key Store
 mkdir $HOMEDIR/Projects             ## Code Projects
 mkdir $HOMEDIR/tmp                  ## Misc Crap
+
+echo "done."
+
+# sudo
+
+echo ""
+echo "From here on we need root access. Enter your password."
+echo ""
 
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -24,30 +41,50 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Hostname
 
 echo ""
-echo "Would you like to set your computer's hostname?  (y/n)"
-read -r response
-if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-  echo "What would you like it to be?"
-  read HOSTNAME
-  sudo scutil --set ComputerName $HOSTNAME
-  sudo scutil --set HostName $HOSTNAME
-  sudo scutil --set LocalHostName $HOSTNAME
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $HOSTNAME
-fi
+echo "Setting hostname to $HOSTNAME"
+echo ""
+
+sudo scutil --set ComputerName $HOSTNAME
+sudo scutil --set HostName $HOSTNAME
+sudo scutil --set LocalHostName $HOSTNAME
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $HOSTNAME
+
+echo "done."
 
 # --- MacOS Updates
 
+echo ""
+echo "Installing MacOS updates:"
+echo ""
+
 softwareupdate --install --all
 
+echo "done."
 
 # --- GCC/Xcode Tools
 
+echo ""
+echo "Checking for Xcode..."
+echo ""
+
 if [[ ! -e `which gcc` || ! -e `which gcc-4.2` ]]; then
+	echo "Installing Xcode"
 	xcode-select --install
 fi
 
+echo "done."
+
 
 # --- MacOS Preferences
+
+echo ""
+echo "Setting Mac OS preferences..."
+echo ""
+
+# Expand the save and print panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 # Show battery percentage/time remaining
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
@@ -83,8 +120,13 @@ defaults write com.apple.screencapture type jpg
 for app in Finder Dock; do killall "$app"; done
 killall SystemUIServer
 
+echo "done."
 
 # --- Homebrew Package Manger
+
+echo ""
+echo "Installing Homebrew..."
+echo ""
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -117,17 +159,6 @@ apps=(
 
 brew cask install ${apps[@]}
 brew cleanup
-
-
-# -- App Config
-
-# Atom
-cp ./apps/atom/config/ $HOMEDIR/.atom/
-apm install `cat apps/atom/packages.list`
-
-# SSH
-cp ./apps/ssh/config $HOMEDIR/.ssh/
-
 
 # --- Misc
 
