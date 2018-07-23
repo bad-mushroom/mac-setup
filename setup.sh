@@ -130,26 +130,15 @@ echo ""
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-mkdir $HOMEDIR/Applications
-brew linkapps
-
-brew install homebrew/completions/brew-cask-completion
-
 apps=(
-	1password			# Password Manager
 	atom				# Code Editor
-	audacity			# Audio Recorder
 	bash 				# Bash Shell
 	caffeine			# Prevent Sleep Mode
 	git					# Git Client
-	gnupg				# GPG Encryption
 	google-chrome		# Chrome Browser
-	google-drive		# Google Drive Client
 	iterm2				# Terminal
 	lastfm				# Audioscrobbler Client
-	php70				# php 7.0
 	slack				# Slack Chat/Communication
-	transmission		# Torrent Client
 	rescuetime			# Productivity Tracking
 	vagrant				# Virtual Machine Management
 	vim					# CLI Editor
