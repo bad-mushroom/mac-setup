@@ -13,11 +13,12 @@ git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
 $HOMEDIR/.dotfiles/setup.sh
 
 # Directories
-mkdir $HOMEDIR/.ssh/keys/public		## SSH Public Key Store
-mkdir $HOMEDIR/.ssh/keys/private	## SSH Private Key Store
-mkdir $HOMEDIR/Projects				## Code Projects
-mkdir $HOMEDIR/VMs					## Virtual Machines
-mkdir $HOMEDIR/tmp					## Misc Crap
+mkdir $HOMEDIR/.ssh/keys/public     ## SSH Public Key Store
+mkdir $HOMEDIR/.ssh/keys/private    ## SSH Private Key Store
+mkdir $HOMEDIR/Projects             ## Code Projects
+mkdir $HOMEDIR/tmp                  ## Misc Crap
+
+sudo -s
 
 # Hostname
 scutil –-set HostName $HOSTNAME
@@ -26,8 +27,6 @@ scutil –-set ComputerName $HOSTNAME
 
 
 # --- MacOS Updates
-
-sudo -s
 
 softwareupdate --install --all
 
