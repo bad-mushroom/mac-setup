@@ -1,6 +1,0 @@
-# --- roguerobots
-
-Host           rr
-HostName       roguerobots.org
-IdentityFile   ~/.ssh/keys/private/roguerobots.org
-User           chris

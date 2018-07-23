@@ -70,6 +70,7 @@ echo ""
 
 git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
 $HOMEDIR/.dotfiles/setup.sh
+source $HOMEDIR/.bashrc
 
 echo ""
 cecho "Done." $green
@@ -105,7 +106,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 cecho "###############################################" $blue
 echo ""
-echo "Setting hostname to $HOSTNAME"
+echo "Setting hostname to $HOSTNAME..."
 echo ""
 
 sudo scutil --set ComputerName $HOSTNAME
