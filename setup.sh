@@ -103,7 +103,7 @@ echo "From here on we need root access. "
 echo "Enter your password..."
 echo ""
 
-sudo -S
+sudo
 
 # Hostname
 
