@@ -1,25 +1,86 @@
 #/bin/bash -e
 
-# --- Constants
+# -----------------------------------------------------------------------------
+#    Configuration
+#
+#    Set configuration options in this section.
+#       - Home directory
+#       - Hostname
+#       - Apps to install
+#       - Directories to create
+# -----------------------------------------------------------------------------
 
+# Set the full path to your user's home directory
 readonly HOMEDIR="/Users/chris"
+
+# Set the hostname for the computer
 readonly HOSTNAME="robot-node-04"
 
-# --- Colors
+# Apps to install via Homebrew Package Manager
+declare -a BREW_APPS=(
+  bash              # Bash Shell
+  git               # Git Client
+  google-drive      # Google Cloud Storage
+  nodejs            # Node
+  npm               # Node Package Manager
+  vagrant           # Virtual Machine Management
+  vim               # CLI Editor
+  wget              # CLI HTTP File Retrieval
+)
 
-black="\[\033[0;30m\]"        # Black
-red="\[\033[0;31m\]"          # Red
-green="\[\033[0;32m\]"        # Green
-yellow="\[\033[0;33m\]"       # Yellow
-blue="\[\033[0;34m\]"         # Blue
-purple="\[\033[0;35m\]"       # Purple
-cyan="\[\033[0;36m\]"         # Cyan
-white="\[\033[0;37m\]"        # White
+# GUI Apps to install via Homebrew Package Manager using Cask
+declare -a BREW_CASK_APPS=(
+  atom              # Code Editor
+  caffeine          # Prevent Sleep Mode
+  dashlane          # Password Manager
+  docker            # Docker for Mac
+  google-chrome     # Chrome Browser
+  iterm2            # Terminal
+  lastfm            # Audioscrobbler Client
+  macdown           # Markdown Editor
+  sequel-pro        # MySQL GUI
+  slack             # Chat/Communication
+  rescuetime        # Productivity Tracking
+  transmit          # File Transfers
+  virtualbox        # Virtual Machines
+)
+
+# Directories to create
+
+declare -a DIRS=(
+  $HOMEDIR/.ssh/keys/public     ## SSH Public Key Store
+  $HOMEDIR/.ssh/keys/private    ## SSH Private Key Store
+  $HOMEDIR/Projects             ## Code Projects
+  $HOMEDIR/tmp                  ## Misc Crap
+)
+
+# -----------------------------------------------------------------------------
+#    End Configuration
+# -----------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------
+#    Get Started
+# -----------------------------------------------------------------------------
+
+# --- Terminal Colors
+
+export CLICOLOR=1
+export TERM=xterm-color
+
+black="\[\033[0;30m\]"
+red="\[\033[0;31m\]"
+green="\[\033[0;32m\]"
+yellow="\[\033[0;33m\]"
+blue="\[\033[0;34m\]"
+purple="\[\033[0;35m\]"
+cyan="\[\033[0;36m\]"
+white="\[\033[0;37m\]"
 
 # Resets the style
 reset=`tput sgr0`
 
-# Color-echo. Improved. [credit to @joaocunha]
 # arg $1 = message
 # arg $2 = Color
 cecho() {
@@ -27,25 +88,14 @@ cecho() {
   return
 }
 
- # --- Get Started
+ # --- Prompt to run
 
 # Set continue to false by default
 CONTINUE=false
 clear
 
 echo ""
-cecho "###############################################" $red
-cecho "#        DO NOT RUN THIS SCRIPT BLINDLY       #" $red
-cecho "#         YOU'LL PROBABLY REGRET IT...        #" $red
-cecho "#                                             #" $red
-cecho "#              READ IT THOROUGHLY             #" $red
-cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" $red
-cecho "###############################################" $red
-echo ""
-
-echo ""
-cecho "Have you read through the script you're about to run and " $red
-cecho "understood that it will make changes to your computer? (y/n)" $red
+cecho "Are you ready to get started? (y/n)" $red
 read -r response
 
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
@@ -54,49 +104,17 @@ if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
 fi
 
 if ! $CONTINUE; then
-  # Check if we're continuing and output a message if not
-  cecho "Please go read the script, it only takes a few minutes" $red
   exit
 fi
 
 # --- Unix Environment
 
-# Dot Files
-
-cecho "###############################################" $blue
-echo ""
-echo "Cloning .dotfiles repo..."
-echo ""
-
-git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
-$HOMEDIR/.dotfiles/setup.sh
-source $HOMEDIR/.bashrc
-
-echo ""
-cecho "Done." $green
-echo ""
-
-# Directories
-
-cecho "###############################################" $blue
-echo ""
-echo "Adding custom directories..."
-echo ""
-
-mkdir -p $HOMEDIR/.ssh/keys/public     ## SSH Public Key Store
-mkdir -p $HOMEDIR/.ssh/keys/private    ## SSH Private Key Store
-mkdir -p $HOMEDIR/Projects             ## Code Projects
-mkdir -p $HOMEDIR/tmp                  ## Misc Crap
-
-echo ""
-cecho "Done." $green
-echo ""
-
 # sudo
 
 cecho "###############################################" $blue
 echo ""
-echo "From here on we need root access. Enter your password."
+echo "From here on we need root access. "
+echo "Enter your password..."
 echo ""
 
 sudo -v
@@ -108,6 +126,7 @@ cecho "###############################################" $blue
 echo ""
 echo "Setting hostname to $HOSTNAME..."
 echo ""
+cecho "###############################################" $blue
 
 sudo scutil --set ComputerName $HOSTNAME
 sudo scutil --set HostName $HOSTNAME
@@ -122,7 +141,7 @@ echo ""
 
 cecho "###############################################" $blue
 echo ""
-echo "Installing MacOS updates:"
+echo "Installing MacOS updates..."
 echo ""
 
 softwareupdate --install --all
@@ -139,8 +158,9 @@ echo "Checking for Xcode..."
 echo ""
 
 if [[ ! -e `which gcc` || ! -e `which gcc-4.2` ]]; then
-	echo "Installing Xcode"
-	xcode-select --install
+  echo "Installing Xcode"
+  echo ""
+  xcode-select --install
 fi
 
 echo ""
@@ -151,6 +171,8 @@ cecho "###############################################" $blue
 echo ""
 echo "Enabling Firewall..."
 echo ""
+
+# --- Firewall
 
 # Enable Filevault
 fdesetup enable
@@ -211,7 +233,7 @@ defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "What 
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 
 # Default screenshot format
-defaults write com.apple.screencapture type jpg
+defaults write com.apple.screencapture type png
 
 # Kill affected applications
 for app in Finder Dock; do killall "$app"; done
@@ -239,24 +261,42 @@ echo ""
 echo "Installing apps..."
 echo ""
 
-apps=(
-	atom				# Code Editor
-	bash 				# Bash Shell
-	caffeine			# Prevent Sleep Mode
-	git					# Git Client
-	google-chrome		# Chrome Browser
-	iterm2				# Terminal
-	lastfm				# Audioscrobbler Client
-	slack				# Slack Chat/Communication
-	rescuetime			# Productivity Tracking
-	vagrant				# Virtual Machine Management
-	vim					# CLI Editor
-	virtualbox			# Virtual Machines
-	wget				# CLI HTTP File Retrieval
-)
-
-brew cask install ${apps[@]}
+brew install ${BREW_APPS[@]}
+brew cask install ${BREW_CASK_APPS[@]}
 brew cleanup
+
+# --- Directories
+
+cecho "###############################################" $blue
+echo ""
+echo "Adding custom directories..."
+echo ""
+
+for dir in "${DIRS[@]}"
+do
+  if [ ! -d $dir ]; then
+    mkdir -p $dir
+  fi
+done
+
+echo ""
+cecho "Done." $green
+echo ""
+
+# --- Dot Files
+
+cecho "###############################################" $blue
+echo ""
+echo "Cloning .dotfiles repo..."
+echo ""
+
+git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
+$HOMEDIR/.dotfiles/setup.sh
+source $HOMEDIR/.bashrc
+
+echo ""
+cecho "Done." $green
+echo ""
 
 # --- Done!
 
@@ -273,6 +313,7 @@ cecho "Killing some open applications in order to take effect." $red
 echo ""
 
 find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
+
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   "Dock" "Finder" "Mail" "Messages" "Safari" "SystemUIServer"; do
   killall "${app}" > /dev/null 2>&1
