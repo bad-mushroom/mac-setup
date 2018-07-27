@@ -33,7 +33,7 @@ declare -a BREW_CASK_APPS=(
   dashlane          # Password Manager
   docker            # Docker for Mac
   google-chrome     # Chrome Browser
-  google-drive      # Google Cloud Storage
+  google-backup-and-sync      # Google Cloud Storage
   iterm2            # Terminal
   lastfm            # Audioscrobbler Client
   macdown           # Markdown Editor
@@ -72,7 +72,14 @@ clear
 
 echo "###############################################"
 echo ""
-echo "   MacOS Configuration and Software installer  "
+echo "   MacOS Configuration and Software installer"
+echo ""
+echo "###############################################"
+echo ""
+echo " - Verify you've modified the configuration to"
+echo "   suit your needs."
+echo " - Some settings will require root. You'll be"
+echo "   Prompted for your password."
 echo ""
 echo "###############################################"
 echo "      Are you ready to get started? (y/n)"
