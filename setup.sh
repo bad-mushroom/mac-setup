@@ -106,7 +106,6 @@ echo "###############################################"
 echo ""
 echo "Setting hostname to $HOSTNAME..."
 echo ""
-echo "###############################################"
 
 sudo scutil --set ComputerName $HOSTNAME
 sudo scutil --set HostName $HOSTNAME
