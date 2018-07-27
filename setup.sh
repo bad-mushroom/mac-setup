@@ -146,21 +146,7 @@ fi
 echo "Done."
 echo ""
 
-# --- Firewall
-
-
-echo ""
-echo "Enabling Firewall..."
-echo ""
-
-# Enable Filevault
-sudo fdesetup enable
-
-echo "Done."
-echo ""
-
 # --- MacOS Preferences
-
 
 echo ""
 echo "Setting Mac OS preferences..."
@@ -238,6 +224,19 @@ echo ""
 brew install ${BREW_APPS[@]}
 brew cask install ${BREW_CASK_APPS[@]}
 brew cleanup
+
+# --- Firewall
+
+echo ""
+echo "Enabling Firewall..."
+echo ""
+
+# Enable Filevault
+sudo fdesetup enable
+
+echo "Done."
+echo ""
+
 
 # --- Directories
 
