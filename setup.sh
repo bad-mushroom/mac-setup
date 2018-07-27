@@ -20,7 +20,6 @@ readonly HOSTNAME="robot-node-04"
 declare -a BREW_APPS=(
   bash              # Bash Shell
   git               # Git Client
-  google-drive      # Google Cloud Storage
   nodejs            # Node
   npm               # Node Package Manager
   vagrant           # Virtual Machine Management
@@ -35,6 +34,7 @@ declare -a BREW_CASK_APPS=(
   dashlane          # Password Manager
   docker            # Docker for Mac
   google-chrome     # Chrome Browser
+  google-drive      # Google Cloud Storage
   iterm2            # Terminal
   lastfm            # Audioscrobbler Client
   macdown           # Markdown Editor
@@ -64,38 +64,18 @@ declare -a DIRS=(
 #    Get Started
 # -----------------------------------------------------------------------------
 
-# --- Terminal Colors
-
-export CLICOLOR=1
-export TERM=xterm-color
-
-black="\[\033[0;30m\]"
-red="\[\033[0;31m\]"
-green="\[\033[0;32m\]"
-yellow="\[\033[0;33m\]"
-blue="\[\033[0;34m\]"
-purple="\[\033[0;35m\]"
-cyan="\[\033[0;36m\]"
-white="\[\033[0;37m\]"
-
-# Resets the style
-reset=`tput sgr0`
-
-# arg $1 = message
-# arg $2 = Color
-cecho() {
-  echo "${2}${1}${reset}"
-  return
-}
-
  # --- Prompt to run
 
 # Set continue to false by default
 CONTINUE=false
 clear
 
+echo "###############################################"
 echo ""
-cecho "Are you ready to get started? (y/n)" $red
+echo "   MacOS Configuration and Software installer  "
+echo ""
+echo "###############################################"
+echo "      Are you ready to get started? (y/n)"
 read -r response
 
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
@@ -111,7 +91,7 @@ fi
 
 # sudo
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "From here on we need root access. "
 echo "Enter your password..."
@@ -122,37 +102,35 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Hostname
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Setting hostname to $HOSTNAME..."
 echo ""
-cecho "###############################################" $blue
+echo "###############################################"
 
 sudo scutil --set ComputerName $HOSTNAME
 sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $HOSTNAME
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
 # --- MacOS Updates
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Installing MacOS updates..."
 echo ""
 
 softwareupdate --install --all
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
 # --- GCC/Xcode Tools
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Checking for Xcode..."
 echo ""
@@ -163,27 +141,25 @@ if [[ ! -e `which gcc` || ! -e `which gcc-4.2` ]]; then
   xcode-select --install
 fi
 
-echo ""
-cecho "Done." $green
-echo ""
-
-cecho "###############################################" $blue
-echo ""
-echo "Enabling Firewall..."
+echo "Done."
 echo ""
 
 # --- Firewall
 
+echo "###############################################"
+echo ""
+echo "Enabling Firewall..."
+echo ""
+
 # Enable Filevault
 fdesetup enable
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
 # --- MacOS Preferences
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Setting Mac OS preferences..."
 echo ""
@@ -239,24 +215,22 @@ defaults write com.apple.screencapture type png
 for app in Finder Dock; do killall "$app"; done
 killall SystemUIServer
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
 # --- Homebrew Package Manger
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Installing Homebrew..."
 echo ""
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Installing apps..."
 echo ""
@@ -267,7 +241,7 @@ brew cleanup
 
 # --- Directories
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Adding custom directories..."
 echo ""
@@ -279,23 +253,23 @@ do
   fi
 done
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
 # --- Dot Files
 
-cecho "###############################################" $blue
+echo "###############################################"
 echo ""
 echo "Cloning .dotfiles repo..."
 echo ""
 
-git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
-$HOMEDIR/.dotfiles/setup.sh
-source $HOMEDIR/.bashrc
+if [ ! -d $HOMEDIR/.dotfiles ]; then
+  git clone https://github.com/bad-mushroom/dotfiles.git $HOMEDIR/.dotfiles
+  $HOMEDIR/.dotfiles/setup.sh
+  source $HOMEDIR/.bashrc
+fi
 
-echo ""
-cecho "Done." $green
+echo "Done."
 echo ""
 
 # --- Done!
@@ -305,11 +279,11 @@ echo ""
 echo "That's all folks..."
 echo ""
 echo ""
-cecho "################################################################################" $white
+echo "###############################################"
 echo ""
 echo ""
-cecho "Note that some of these changes require a logout/restart to take effect." $red
-cecho "Killing some open applications in order to take effect." $red
+echo "Note that some of these changes require a logout/restart to take effect."
+echo "You should do that now."
 echo ""
 
 find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
