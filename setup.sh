@@ -22,7 +22,6 @@ declare -a BREW_APPS=(
   git               # Git Client
   nodejs            # Node
   npm               # Node Package Manager
-  vagrant           # Virtual Machine Management
   vim               # CLI Editor
   wget              # CLI HTTP File Retrieval
 )
@@ -42,6 +41,7 @@ declare -a BREW_CASK_APPS=(
   slack             # Chat/Communication
   rescuetime        # Productivity Tracking
   transmit          # File Transfers
+  vagrant           # Virtual Machine Management
   virtualbox        # Virtual Machines
 )
 
@@ -91,18 +91,15 @@ fi
 
 # sudo
 
-echo "###############################################"
 echo ""
 echo "From here on we need root access. "
 echo "Enter your password..."
 echo ""
 
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+sudo -S
 
 # Hostname
 
-echo "###############################################"
 echo ""
 echo "Setting hostname to $HOSTNAME..."
 echo ""
@@ -117,7 +114,6 @@ echo ""
 
 # --- MacOS Updates
 
-echo "###############################################"
 echo ""
 echo "Installing MacOS updates..."
 echo ""
@@ -129,7 +125,7 @@ echo ""
 
 # --- GCC/Xcode Tools
 
-echo "###############################################"
+
 echo ""
 echo "Checking for Xcode..."
 echo ""
@@ -145,20 +141,20 @@ echo ""
 
 # --- Firewall
 
-echo "###############################################"
+
 echo ""
 echo "Enabling Firewall..."
 echo ""
 
 # Enable Filevault
-fdesetup enable
+sudo fdesetup enable
 
 echo "Done."
 echo ""
 
 # --- MacOS Preferences
 
-echo "###############################################"
+
 echo ""
 echo "Setting Mac OS preferences..."
 echo ""
@@ -202,7 +198,7 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 # Login screen message
-defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "What is thy bidding, my master?"
+sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "What is thy bidding, my master?"
 
 # Show all device icons in finder
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -219,7 +215,6 @@ echo ""
 
 # --- Homebrew Package Manger
 
-echo "###############################################"
 echo ""
 echo "Installing Homebrew..."
 echo ""
@@ -229,7 +224,6 @@ echo ""
 echo "Done."
 echo ""
 
-echo "###############################################"
 echo ""
 echo "Installing apps..."
 echo ""
@@ -240,7 +234,6 @@ brew cleanup
 
 # --- Directories
 
-echo "###############################################"
 echo ""
 echo "Adding custom directories..."
 echo ""
@@ -257,7 +250,6 @@ echo ""
 
 # --- Dot Files
 
-echo "###############################################"
 echo ""
 echo "Cloning .dotfiles repo..."
 echo ""
@@ -278,7 +270,7 @@ echo ""
 echo "That's all folks..."
 echo ""
 echo ""
-echo "###############################################"
+
 echo ""
 echo ""
 echo "Note that some of these changes require a logout/restart to take effect."
